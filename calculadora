@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculadora Funcional</title>
+    <meta charset="UTF-8">
+    <script>
+      function add(num1, num2) {
+        return num1 + num2;
+      }
+      
+      function subtract(num1, num2) {
+        return num1 - num2;
+      }
+      
+      function multiply(num1, num2) {
+        return num1 * num2;
+      }
+      
+      function divide(num1, num2) {
+        return num1 / num2;
+      }
+      
+      function operate(operator, num1, num2) {
+        switch (operator) {
+          case '+':
+            return add(num1, num2);
+          case '-':
+            return subtract(num1, num2);
+          case '*':
+            return multiply(num1, num2);
+          case '/':
+            if (num2 === 0) {
+              return "Error: Division by zero";
+            }
+            return divide(num1, num2);
+          default:
+            return "Error: Invalid operator";
+        }
+      }
+      
+      function clearScreen() {
+        document.getElementById("result").value = "";
+      }
+      
+      function backspace() {
+        var result = document.getElementById("result").value;
+        document.getElementById("result").value = result.substring(0, result.length - 1);
+      }
+      
+      function updateScreen(value) {
+        var result = document.getElementById("result");
+        result.value += value;
+      }
+      
+      function calculate() {
+        var result = document.getElementById("result").value;
+        var pattern = /[+\-*/]/;
+        var nums = result.split(pattern);
+        var operator = result.match(pattern);
+        if (nums.length !== 2 || !operator) {
+          alert("Invalid calculation");
+          clearScreen();
+          return;
+        }
+        var num1 = parseFloat(nums[0]);
+        var num2 = parseFloat(nums[1]);
+        var answer = operate(operator, num1, num2);
+        clearScreen();
+        updateScreen(answer);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="calculator">
+      <input type="text" id="result" disabled>
+      <button onclick="updateScreen('7')">7</button>
+      <button onclick="updateScreen('8')">8</button>
+      <button onclick="updateScreen('9')">9</button>
+      <button onclick="updateScreen('+')">+</button>
+      <br>
+      <button onclick="updateScreen('4')">4</button>
+      <button onclick="updateScreen('5')">5</button>
+      <button onclick="updateScreen('6')">6</button>
+      <button onclick="updateScreen('-')">-</button>
+      <br>
+      <button onclick="updateScreen('1')">1</button>
+      <button onclick="updateScreen('2')">2</button>
+      <button onclick="updateScreen('3')">3</button>
+      <button onclick="updateScreen('*')">*</button>
+      <br>
+      <button onclick="updateScreen('0')">0</button>
+      <button onclick="clearScreen()">C</button>
+      <button onclick="backspace()">⌫</button>
+      <button onclick="updateScreen('/')">/</button>
+      <br>
+      <button onclick="calculate()">=</button>
+    </div>
+  </body>
+</html>
